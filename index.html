@@ -1,39 +1,28 @@
 <!doctype html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Asad SMM Panel</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="app">
-  <aside class="sidebar">
-    <div class="brand">ASAD <span>SMM</span></div>
-    <nav>
-      <a class="active" href="#">Dashboard</a><a href="#">New Order</a><a href="#">Services</a>
-      <a href="#">Orders</a><a href="#">Add Funds</a><a href="#">Profile</a>
-    </nav>
-  </aside>
-  <main>
-    <header><button id="menu">☰</button><div>Asad SMM Panel</div><div class="balance">Balance: <b>$0.00</b></div></header>
-    <section class="hero"><div><p>WELCOME BACK</p><h1>Grow your social presence</h1><span>Fast, simple and professional order management.</span></div><button class="primary">+ New Order</button></section>
-    <section class="cards">
-      <div><small>Balance</small><strong>$0.00</strong></div>
-      <div><small>Total Orders</small><strong>0</strong></div>
-      <div><small>Completed</small><strong>0</strong></div>
-      <div><small>Services</small><strong>12</strong></div>
-    </section>
-    <section class="panel">
-      <div class="panelhead"><h2>New Order</h2><span>Quick order</span></div>
-      <label>Service</label><select><option>Instagram Marketing</option><option>TikTok Marketing</option><option>YouTube Marketing</option><option>Facebook Marketing</option></select>
-      <label>Link</label><input placeholder="https://...">
-      <div class="row"><div><label>Quantity</label><input type="number" placeholder="100"></div><div><label>Estimated price</label><input value="$0.00" readonly></div></div>
-      <button class="primary full">Place Order</button>
-    </section>
-    <section class="panel"><div class="panelhead"><h2>Recent Orders</h2><span>No orders yet</span></div><div class="empty">Your recent orders will appear here.</div></section>
-  </main>
-</div>
+<title>Asad SMM Panel</title><link rel="stylesheet" href="style.css">
+</head><body>
+<header><b>ASAD SMM</b><span>Working Demo</span></header><main>
+<section class="hero"><div><small>WELCOME BACK</small><h1>Grow your social presence</h1><p>Simple and professional order management.</p></div><button onclick="document.getElementById('order').scrollIntoView()">+ New Order</button></section>
+<section class="stats">
+<div><label>Balance</label><strong>$0.00</strong></div><div><label>Total Orders</label><strong id="total">0</strong></div>
+<div><label>Completed</label><strong id="completed">0</strong></div><div><label>Services</label><strong>5</strong></div></section>
+<section id="order" class="card"><h2>New Order</h2>
+<form id="orderForm"><label>Service</label>
+<select id="service" required><option>WhatsApp Marketing</option><option>WhatsApp Poll / Survey</option><option>TikTok Marketing</option><option>Instagram Marketing</option><option>Facebook Marketing</option><option>Social Media Management</option></select>
+<label>Link / Contact</label><input id="link" placeholder="Enter your authorized page/link" required>
+<label>Quantity</label><input id="qty" type="number" min="1" placeholder="e.g. 100" required>
+<button class="primary" type="submit">Place Order</button><p id="msg"></p></form></section>
+<section class="card"><h2>Recent Orders</h2><div id="orders">No orders yet.</div></section>
+</main>
 <script>
-document.getElementById('menu').onclick=()=>document.querySelector('.sidebar').classList.toggle('show');
-</script>
-</body></html>
+const KEY="asad_smm_orders"; let orders=JSON.parse(localStorage.getItem(KEY)||"[]");
+function render(){document.getElementById("total").textContent=orders.length;
+document.getElementById("completed").textContent=orders.filter(x=>x.status==="Completed").length;
+const box=document.getElementById("orders"); if(!orders.length){box.textContent="No orders yet.";return;}
+box.innerHTML=orders.map(x=>`<div class="order"><b>#${x.id}</b><br>${x.service}<br><small>${x.link} • Qty: ${x.qty}</small><br><span>${x.status}</span></div>`).join("");}
+document.getElementById("orderForm").addEventListener("submit",e=>{e.preventDefault();
+const id=Date.now().toString().slice(-8); const item={id,service:service.value,link:link.value.trim(),qty:qty.value,status:"Pending"};
+orders.unshift(item);localStorage.setItem(KEY,JSON.stringify(orders));render();msg.textContent="Order #"+id+" created successfully.";e.target.reset();}); render();
+</script></body></html>
