@@ -1,28 +1,126 @@
 <!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Asad SMM Panel</title><link rel="stylesheet" href="style.css">
-</head><body>
-<header><b>ASAD SMM</b><span>Working Demo</span></header><main>
-<section class="hero"><div><small>WELCOME BACK</small><h1>Grow your social presence</h1><p>Simple and professional order management.</p></div><button onclick="document.getElementById('order').scrollIntoView()">+ New Order</button></section>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ASAD SMM • VIP Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="logo"><span>✦</span> ASAD <b>SMM</b></div>
+  <div class="vip">VIP PANEL</div>
+</header>
+
+<main>
+<section class="welcome">
+  <div class="tag">PREMIUM EXPERIENCE</div>
+  <h1>Social growth,<br><em>made simple.</em></h1>
+  <p>Manage services, orders and WhatsApp campaigns from one premium dashboard.</p>
+  <button onclick="document.querySelector('#newOrder').scrollIntoView({behavior:'smooth'})">＋ Create Order</button>
+</section>
+
 <section class="stats">
-<div><label>Balance</label><strong>$0.00</strong></div><div><label>Total Orders</label><strong id="total">0</strong></div>
-<div><label>Completed</label><strong id="completed">0</strong></div><div><label>Services</label><strong>5</strong></div></section>
-<section id="order" class="card"><h2>New Order</h2>
-<form id="orderForm"><label>Service</label>
-<select id="service" required><option>WhatsApp Marketing</option><option>WhatsApp Poll / Survey</option><option>TikTok Marketing</option><option>Instagram Marketing</option><option>Facebook Marketing</option><option>Social Media Management</option></select>
-<label>Link / Contact</label><input id="link" placeholder="Enter your authorized page/link" required>
-<label>Quantity</label><input id="qty" type="number" min="1" placeholder="e.g. 100" required>
-<button class="primary" type="submit">Place Order</button><p id="msg"></p></form></section>
-<section class="card"><h2>Recent Orders</h2><div id="orders">No orders yet.</div></section>
+ <div><small>WALLET BALANCE</small><strong>$0.00</strong><i>Available</i></div>
+ <div><small>TOTAL ORDERS</small><strong id="orders">0</strong><i>All time</i></div>
+ <div><small>COMPLETED</small><strong id="completed">0</strong><i>Successful</i></div>
+ <div><small>SERVICES</small><strong>8</strong><i>Premium catalog</i></div>
+</section>
+
+<section class="layout">
+<div class="panel" id="newOrder">
+ <div class="title"><div><span>NEW ORDER</span><h2>Place an order</h2></div><b class="live">● LIVE</b></div>
+ <label>Service</label>
+ <select id="service" onchange="serviceChanged()">
+  <option>Instagram Marketing</option>
+  <option>Facebook Marketing</option>
+  <option>YouTube Marketing</option>
+  <option>TikTok Marketing</option>
+  <option>WhatsApp Marketing</option>
+  <option>WhatsApp Poll</option>
+  <option>WhatsApp Business Campaign</option>
+  <option>Social Media Management</option>
+ </select>
+
+ <div id="poll" class="poll hidden">
+  <label>Poll question</label><input id="question" placeholder="What should we choose?">
+  <label>Poll options</label>
+  <div id="pollOptions"></div>
+  <button class="add" onclick="addOption()">＋ Add option</button>
+ </div>
+
+ <label>Target / Link</label>
+ <input id="target" placeholder="Paste your profile, post or WhatsApp link">
+
+ <div class="two">
+  <div><label>Quantity</label><input id="qty" type="number" min="1" value="100"></div>
+  <div><label>Estimated price</label><div class="price" id="price">$1.00</div></div>
+ </div>
+ <button class="place" onclick="placeOrder()">Place Order →</button>
+ <p id="message"></p>
+</div>
+
+<aside class="panel side">
+ <span class="eyebrow">VIP FEATURES</span>
+ <h2>Everything<br>in one place.</h2>
+ <div class="feature">✦ <b>Premium Dashboard</b><small>Clean, fast order management</small></div>
+ <div class="feature">◉ <b>WhatsApp Polls</b><small>Question + multiple options</small></div>
+ <div class="feature">↗ <b>Order Tracking</b><small>Keep every order organized</small></div>
+ <div class="feature">♢ <b>Mobile Ready</b><small>Designed for your phone</small></div>
+</aside>
+</section>
+
+<section class="panel history">
+ <div class="title"><div><span>ORDER HISTORY</span><h2>Recent orders</h2></div></div>
+ <div id="history">No orders yet.</div>
+</section>
 </main>
+
+<footer>ASAD SMM • VIP EXPERIENCE</footer>
+
 <script>
-const KEY="asad_smm_orders"; let orders=JSON.parse(localStorage.getItem(KEY)||"[]");
-function render(){document.getElementById("total").textContent=orders.length;
-document.getElementById("completed").textContent=orders.filter(x=>x.status==="Completed").length;
-const box=document.getElementById("orders"); if(!orders.length){box.textContent="No orders yet.";return;}
-box.innerHTML=orders.map(x=>`<div class="order"><b>#${x.id}</b><br>${x.service}<br><small>${x.link} • Qty: ${x.qty}</small><br><span>${x.status}</span></div>`).join("");}
-document.getElementById("orderForm").addEventListener("submit",e=>{e.preventDefault();
-const id=Date.now().toString().slice(-8); const item={id,service:service.value,link:link.value.trim(),qty:qty.value,status:"Pending"};
-orders.unshift(item);localStorage.setItem(KEY,JSON.stringify(orders));render();msg.textContent="Order #"+id+" created successfully.";e.target.reset();}); render();
-</script></body></html>
+let opts=0;
+const orders=JSON.parse(localStorage.getItem("vipOrders")||"[]");
+function addOption(){
+ opts++;
+ const d=document.createElement("div"); d.className="opt";
+ d.innerHTML=`<input class="pollOpt" placeholder="Option ${opts}">`;
+ document.getElementById("pollOptions").appendChild(d);
+}
+function serviceChanged(){
+ const on=document.getElementById("service").value==="WhatsApp Poll";
+ document.getElementById("poll").classList.toggle("hidden",!on);
+ if(on&&opts===0){addOption();addOption();}
+}
+function updatePrice(){
+ const q=Number(document.getElementById("qty").value)||0;
+ document.getElementById("price").textContent="$"+(q/100).toFixed(2);
+}
+document.getElementById("qty").addEventListener("input",updatePrice);
+function placeOrder(){
+ const target=document.getElementById("target").value.trim();
+ const msg=document.getElementById("message");
+ if(!target){msg.textContent="Please enter a target or link.";msg.className="err";return;}
+ if(document.getElementById("service").value==="WhatsApp Poll"){
+   const q=document.getElementById("question").value.trim();
+   const o=[...document.querySelectorAll(".pollOpt")].map(x=>x.value.trim()).filter(Boolean);
+   if(!q||o.length<2){msg.textContent="Add a question and at least 2 poll options.";msg.className="err";return;}
+ }
+ orders.unshift({id:Date.now(),service:document.getElementById("service").value,target,qty:document.getElementById("qty").value,status:"Pending",time:new Date().toLocaleString()});
+ localStorage.setItem("vipOrders",JSON.stringify(orders));
+ msg.textContent="Order created successfully • Pending";msg.className="ok";
+ render(); update();
+}
+function update(){
+ document.getElementById("orders").textContent=orders.length;
+ document.getElementById("completed").textContent=orders.filter(x=>x.status==="Completed").length;
+}
+function render(){
+ const h=document.getElementById("history");
+ if(!orders.length){h.innerHTML='<div class="empty">No orders yet.</div>';return;}
+ h.innerHTML=orders.slice(0,10).map(x=>`<div class="order"><div><b>#${x.id}</b><br>${x.service}<small>${x.target} • Qty ${x.qty}<br>${x.time}</small></div><span>${x.status}</span></div>`).join("");
+}
+update();render();updatePrice();
+</script>
+</body>
+</html>
