@@ -1,0 +1,27 @@
+ASAD SMM FULL NODE.JS PANEL
+
+1) Install Node.js 18+.
+2) Extract this ZIP.
+3) Open a terminal in this folder.
+4) Run: npm install
+5) Create .env from .env.example and set a strong JWT_SECRET.
+6) Run: npm start
+7) Open http://localhost:3000
+
+Included in this ONE ZIP:
+- server.js
+- package.json
+- public/index.html
+- public/app.js
+- public/style.css
+- SQLite database setup (created automatically)
+- login/signup
+- orders
+- JazzCash/Easypaisa deposit requests
+- README and deployment notes
+
+IMPORTANT:
+This is a real server/database starter, not a localStorage-only demo.
+Automatic JazzCash/Easypaisa payment verification and actual WhatsApp sending
+still require official merchant/API credentials and provider approval.
+Do not upload passwords, OTPs, PINs, or private API secrets to GitHub.
