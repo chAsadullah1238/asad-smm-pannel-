@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Asad SMM Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">ASAD <span>SMM</span></div>
+    <nav>
+      <a class="active" href="#">Dashboard</a><a href="#">New Order</a><a href="#">Services</a>
+      <a href="#">Orders</a><a href="#">Add Funds</a><a href="#">Profile</a>
+    </nav>
+  </aside>
+  <main>
+    <header><button id="menu">☰</button><div>Asad SMM Panel</div><div class="balance">Balance: <b>$0.00</b></div></header>
+    <section class="hero"><div><p>WELCOME BACK</p><h1>Grow your social presence</h1><span>Fast, simple and professional order management.</span></div><button class="primary">+ New Order</button></section>
+    <section class="cards">
+      <div><small>Balance</small><strong>$0.00</strong></div>
+      <div><small>Total Orders</small><strong>0</strong></div>
+      <div><small>Completed</small><strong>0</strong></div>
+      <div><small>Services</small><strong>12</strong></div>
+    </section>
+    <section class="panel">
+      <div class="panelhead"><h2>New Order</h2><span>Quick order</span></div>
+      <label>Service</label><select><option>Instagram Marketing</option><option>TikTok Marketing</option><option>YouTube Marketing</option><option>Facebook Marketing</option></select>
+      <label>Link</label><input placeholder="https://...">
+      <div class="row"><div><label>Quantity</label><input type="number" placeholder="100"></div><div><label>Estimated price</label><input value="$0.00" readonly></div></div>
+      <button class="primary full">Place Order</button>
+    </section>
+    <section class="panel"><div class="panelhead"><h2>Recent Orders</h2><span>No orders yet</span></div><div class="empty">Your recent orders will appear here.</div></section>
+  </main>
+</div>
+<script>
+document.getElementById('menu').onclick=()=>document.querySelector('.sidebar').classList.toggle('show');
+</script>
+</body></html>
