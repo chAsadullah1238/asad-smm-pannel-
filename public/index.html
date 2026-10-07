@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ASAD SMM • VIP Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+<h1>ASAD <span>SMM</span></h1>
+<p>VIP Marketing Panel</p>
+</header>
+
+<main>
+
+<section id="auth">
+
+<div class="card">
+<h2>Login</h2>
+<input id="liEmail" type="email" placeholder="Email">
+<input id="liPass" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+</div>
+
+<div class="card">
+<h2>Create account</h2>
+<input id="suEmail" type="email" placeholder="Email">
+<input id="suPass" type="password" placeholder="Password (6+ characters)">
+<button onclick="signup()">Sign up</button>
+</div>
+
+<p id="msg"></p>
+
+</section>
+
+<section id="app" hidden>
+
+<div class="top card">
+<div id="me"></div>
+<button class="small" onclick="logout()">Logout</button>
+</div>
+
+<div class="card">
+<h2>Wallet deposit request</h2>
+
+<select id="method">
+<option>JazzCash</option>
+<option>Easypaisa</option>
+</select>
+
+<input id="amount" type="number" min="1" placeholder="Amount (PKR)">
+<input id="tx" placeholder="Transaction ID">
+
+<button onclick="deposit()">Submit deposit</button>
+</div>
+
+<div class="card">
+<h2>New order</h2>
+
+<select id="service">
+<option>Instagram Marketing</option>
+<option>Facebook Marketing</option>
+<option>YouTube Marketing</option>
+<option>TikTok Marketing</option>
+<option>WhatsApp Marketing</option>
+<option>WhatsApp Poll</option>
+</select>
+
+<input id="target" placeholder="Target URL / campaign details">
+<input id="qty" type="number" min="1" placeholder="Quantity">
+
+<button onclick="order()">Create order</button>
+</div>
+
+<div class="card">
+<h2>Orders</h2>
+<pre id="orders"></pre>
+</div>
+
+<div class="card">
+<h2>Deposits</h2>
+<pre id="deps"></pre>
+</div>
+
+</section>
+
+</main>
+
+<script src="app.js"></script>
+
+</body>
+  </html>
